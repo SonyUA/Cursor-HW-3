@@ -1,11 +1,3 @@
-let boxOne;
-let boxTwo;
-let boxThree;
-let boxFour;
-let boxFive;
-let boxSix;
-let boxSeven;
-
 /* Створити функцію getMaxDigit(number) – 
 яка отримує будь-яке число та виводить
 найбільшу цифру в цьому числі. 
@@ -17,10 +9,12 @@ function getMaxDigit(num) {
     if (numInner) {
         let a = String(num);
         maxNum = Math.max(...a);
+        document.getElementById("boxOne").innerHTML = `<p><b>Відповідь: </b>Отримано число  <span>${numInner}</span> , найбільша цифра в цьому числі  --  <span>${maxNum}</span></p>`;
     } else {
+        document.getElementById("boxOne").innerHTML = "Отримано не число??";
         console.log("Це не число!!!");
     }
-    boxOne = document.getElementById("boxOne").innerHTML = `<p><b>Відповідь: </b>Отримано число  <span>${numInner}</span> , найбільша цифра в цьому числі  --  <span>${maxNum}</span></p>`;
+
     return maxNum;
 }
 
@@ -28,18 +22,30 @@ function getMaxDigit(num) {
 
 function exponentiation(num, count) {
     const numInner = parseInt(num);
-    const countInner = parseInt(count);
+    let countInner = parseInt(count);
     let counter = numInner;
-    if (numInner && countInner) {
+    if (countInner < 0) {
+        countInner = Math.abs(countInner);
         for (let i = 0; i < countInner - 1; i++) {
             counter *= numInner;
         }
+        document.getElementById("boxTwo").innerHTML = `<p><b>Відповідь: </b>Отримано число  <span>${numInner}</span> , 
+    перевести його в ступінь  --  <span>${countInner}</span>  =  <span>${counter}</span></p>`;
+        return (counter = 1 / counter);
+    } else if (countInner === 0) {
+        document.getElementById("boxTwo").innerHTML = `<p><b>Відповідь: </b>Отримано число  <span>${numInner}</span> , 
+    перевести його в ступінь  --  <span>${countInner}</span>  =  <span>${(counter = numInner / numInner)}</span></p>`;
+        return (counter = numInner / numInner);
+    } else if (numInner && countInner) {
+        for (let i = 0; i < countInner - 1; i++) {
+            counter *= numInner;
+        }
+        document.getElementById("boxTwo").innerHTML = `<p><b>Відповідь: </b>Отримано число  <span>${numInner}</span> , 
+    перевести його в ступінь  --  <span>${countInner}</span>  =  <span>${counter}</span></p>`;
+        return counter;
     } else {
         console.log("Це не число!!!");
     }
-    boxTwo = document.getElementById("boxTwo").innerHTML = `<p><b>Відповідь: </b>Отримано число  <span>${numInner}</span> , 
-    перевести його в ступінь  --  <span>${countInner}</span>  =  <span>${counter}</span></p>`;
-    return counter;
 }
 
 /*Створити функцію, яка форматує ім'я, роблячи першу букву великою. ("влад" -> "Влад", "вЛАД" -> "Влад" і так далі); */
@@ -49,16 +55,12 @@ function formattedName(name) {
     let NormalName = "";
     if (!parseInt(name)) {
         for (let i = 0; i < name.length; i++) {
-            if (i === 0) {
-                NormalName += name[i].toUpperCase();
-            } else if (i > 0) {
-                NormalName += name[i].toLowerCase();
-            }
+            NormalName = name[0].toUpperCase() + name.substring(1).toLowerCase();
         }
     } else {
         console.log("це не строка !!!");
     }
-    boxThree = document.getElementById("boxThree").innerHTML = `<p><b>Відповідь:</b> Введено імя  <span>${nameInner}</span> , 
+    document.getElementById("boxThree").innerHTML = `<p><b>Відповідь:</b> Введено імя  <span>${nameInner}</span> , 
     форматуєм  =  <span>${NormalName}</span></p>`;
     return NormalName;
 }
@@ -79,7 +81,7 @@ function tax(sum, one, two) {
     } else {
         console.log("Це не цифри!!!!");
     }
-    boxFour = document.getElementById("boxFour").innerHTML = `<p><b>Відповідь:</b> Заплатили  <span>${sumInner}</span> , 
+    document.getElementById("boxFour").innerHTML = `<p><b>Відповідь:</b> Заплатили  <span>${sumInner}</span> , 
     Пенсійний фонд <span>${oneInner}</span> , Армія <span>${twoInner}</span> == залишок ${result}</p>`;
     return result;
 }
@@ -96,7 +98,7 @@ function getRandomNumber(one, two) {
     } else {
         console.log("Це не число !!!");
     }
-    boxFive = document.getElementById("boxFive").innerHTML = `<p><b>Відповідь:</b> Випадкове число від  <span>${a}</span>  
+    document.getElementById("boxFive").innerHTML = `<p><b>Відповідь:</b> Випадкове число від  <span>${a}</span>  
     до  <span>${b}</span>  ==  ${result}</p>`;
     return result;
 }
@@ -116,7 +118,7 @@ function countLetter(letter, word) {
     } else {
         console.log("щось неправільно!!");
     }
-    boxSix = document.getElementById("boxSix").innerHTML = `<p><b>Відповідь:</b> Введена буква  <span>${letterInner}</span>,
+    document.getElementById("boxSix").innerHTML = `<p><b>Відповідь:</b> Введена буква  <span>${letterInner}</span>,
     введене слово  <span>${wordInner}</span>,  буква зустрілася <span>${count}</span> разів </p>`;
     return count;
 }
@@ -129,22 +131,22 @@ function convertCurrency(sum) {
     let result = "";
     const sumInner = parseInt(sum);
     let currency = String(sum).toLowerCase();
-
+    const curs = 25;
     if (currency.indexOf("uah") > 0 && sumInner) {
-        result = `${sumInner / 25} $`;
+        result = `${sumInner / curs} $`;
     } else if (currency.indexOf("$") > 0 && sumInner) {
-        result = `${sumInner * 25} UAH`;
+        result = `${sumInner * curs} UAH`;
     } else {
         console.log("ERROR");
     }
-    boxSeven = document.getElementById("boxSeven").innerHTML = `<p><b>Відповідь:</b> Віддали <span>${currency}</span>,
+    document.getElementById("boxSeven").innerHTML = `<p><b>Відповідь:</b> Віддали <span>${currency}</span>,
     отримали  <span>${result}</span></p>`;
     return result;
 }
-console.log(getMaxDigit("1236"));
-console.log(exponentiation(5, 3));
-console.log(formattedName("вЛАД"));
+console.log(getMaxDigit("1234"));
+console.log(exponentiation(5, 0));
+console.log(formattedName("ПеТрО"));
 console.log(tax(1000, "18", 1.5));
 console.log(getRandomNumber(1, 10));
 console.log(countLetter("а", "Асталавіста"));
-console.log(convertCurrency("100$"));
+console.log(convertCurrency("2500uah"));
